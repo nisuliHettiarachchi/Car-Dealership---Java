@@ -1,0 +1,131 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class customer {
+
+    int ID;
+    String name;
+    String birthday;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+
+    customer(int cID, String cName, String dob){
+        this.ID = cID;
+        this.name = cName;
+        this.birthday = dob;
+    }
+
+    public static void showOptions(){
+        System.out.println("1 --> View vehicles");
+        System.out.println("2 --> Make an appointment");
+        System.out.println("3 --> View appointments");
+        System.out.println("4 --> Exit");
+    }
+
+    public static void goBackCustomer() throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nChoose from the below options");
+        System.out.println("1 --> Remain as customer");
+        System.out.println("2 --> Go to main menu");
+        System.out.println("3 --> Exit");
+        int exit = sc.nextInt();
+        if (exit == 1){
+            enterToC();
+        }
+        else if (exit == 2){
+            Main.mainMenu();
+        }
+        else {
+            System.out.println("\nExiting the program, have a good day!");
+        }
+    }
+
+    public static void maintenance() throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream("askForAppointment.csv", true);
+        PrintWriter pw = new PrintWriter(fos);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter vehicle ID: ");
+        String vID = sc.nextLine();
+        System.out.println("Enter required assistance in short: ");
+        String job = sc.nextLine();
+        pw.println(vID+","+job);
+        pw.close();
+    }
+
+    public static void viewScheduledAppointments() {
+        String path = "scheduledAppointments.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all vehicles in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void enterToC() throws FileNotFoundException {
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        Scanner b = new Scanner(System.in);
+        System.out.println("Enter Username:");
+        String userName = b.nextLine();
+        System.out.println("Enter Password:");
+        int passWord = b.nextInt();
+        if ((userName.equals("customer123")) && (passWord == 5678)) {
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            customer.showOptions();
+            System.out.println("Enter index of task to be done:");
+            int task = b.nextInt();
+            if (task == 1){
+                admin.viewCarsForSale();
+                customer.goBackCustomer();
+            }
+            else if (task == 2){
+                customer.maintenance();
+                customer.goBackCustomer();
+            }
+            else if (task == 3){
+                customer.viewScheduledAppointments();
+                customer.goBackCustomer();
+            }
+            else if (task == 4){
+                Main.goBackToMainMenu();
+            }
+            else{
+                Main.goBackToMainMenu();
+            }
+        }
+        else {
+            Main.goBackToMainMenu();
+        }
+    }
+}
