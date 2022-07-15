@@ -1,0 +1,178 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class owner {
+
+    public static void showOptions(){
+        System.out.println("1 --> View vehicles for sale");
+        System.out.println("2 --> View customers");
+        System.out.println("3 --> View maintenance records");
+        System.out.println("4 --> View sold vehicles");
+        System.out.println("5 --> View profit the company made");
+        System.out.println("6 --> Get report");
+        System.out.println("7 --> Exit");
+    }
+
+    public static void goBackOwner() throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nChoose from the below options");
+        System.out.println("1 --> Remain as owner");
+        System.out.println("2 --> Go to main menu");
+        System.out.println("3 --> Exit");
+        int exit = sc.nextInt();
+        if (exit == 1){
+            enterToO();
+        }
+        else if (exit == 2){
+            Main.mainMenu();
+        }
+        else {
+            System.out.println("\nExiting the program, have a good day!");
+        }
+    }
+
+    public static void viewCarsForSale() {
+        String path = "carsForSale.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all vehicles in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void viewCustomers() {
+        String path = "customers.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all customers in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                //String[] values = line.split(","); //splits and prints customer ids and other details in order
+                //System.out.println(values[index]);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void viewMaintenance() {
+        String path = "maintenanceRecords.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all maintenance records in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void viewSoldCars() {
+        String path = "carsSold.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all sold cars in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void viewProfit() {
+        String path = "profit.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nDetails of all maintenance records in system:");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void enterToO() throws FileNotFoundException {
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        Scanner c = new Scanner(System.in);
+        System.out.println("Enter Username:");
+        String userName = c.nextLine();
+        System.out.println("Enter Password:");
+        int passWord = c.nextInt();
+        if ((userName.equals("owner123")) && (passWord == 8910)) {
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            owner.showOptions();
+            System.out.println("Enter index of task to be done:");
+            int task = c.nextInt();
+            if (task == 1){
+                owner.viewCarsForSale();
+                owner.goBackOwner();
+            }
+            else if (task == 2){
+                owner.viewCustomers();
+                owner.goBackOwner();
+            }
+            else if (task == 3){
+                owner.viewMaintenance();
+                owner.goBackOwner();
+            }
+            else if (task == 4){
+                owner.viewSoldCars();
+                owner.goBackOwner();
+            }
+            else if (task == 5){
+                owner.viewProfit();
+                owner.goBackOwner();
+            }
+            else if (task == 6){
+                //report
+                System.out.println();
+                owner.goBackOwner();
+            }
+            else if (task == 7){
+                Main.goBackToMainMenu();
+
+            }
+            else{
+                Main.goBackToMainMenu();
+            }
+        }
+        else {
+            Main.goBackToMainMenu();
+        }
+    }
+}
