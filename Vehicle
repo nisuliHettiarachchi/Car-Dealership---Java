@@ -1,0 +1,131 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class vehicle {
+    private static String plateNumber;
+    private static String year;
+    private static String brand;
+    private static String model;
+    private static int sellingPrice;
+
+    vehicle(){
+
+    }
+
+    vehicle(String plateNumber, String year, String brand, String model, int sellingPrice){
+        vehicle.plateNumber = plateNumber;
+        vehicle.year = year;
+        vehicle.brand = brand;
+        vehicle.model = model;
+        vehicle.sellingPrice = sellingPrice;
+    }
+
+    public static List<vehicle> vehicleObject = new ArrayList<>();
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        vehicle.plateNumber = plateNumber;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        vehicle.year = year;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        vehicle.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        vehicle.model = model;
+    }
+
+    public int getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(int sellingPrice) {
+        vehicle.sellingPrice = sellingPrice;
+    }
+
+    public void viewVehicles(){
+        System.out.println("Plate number: "+getPlateNumber());
+        System.out.println("Vehicle year: "+getYear());
+        System.out.println("Vehicle brand: "+getBrand());
+        System.out.println("Vehicle model: "+getModel());
+        System.out.println("Vehicle selling price: "+getSellingPrice());
+    }
+
+
+    public static vehicle getVehicle() throws FileNotFoundException {
+        Scanner a = new Scanner(System.in);
+        System.out.println("Enter number on plate: ");
+        plateNumber = (a.nextLine());
+        System.out.println("Enter model: ");
+        model = a.nextLine();
+        System.out.println("Enter brand: ");
+        brand = a.nextLine();
+        System.out.println("Enter year: ");
+        year = a.nextLine();
+        System.out.println("Enter selling price: ");
+        sellingPrice = a.nextInt();
+        vehicle newVehicle = new vehicle(plateNumber,year,brand,model,sellingPrice);
+        FileOutputStream fos = new FileOutputStream("carsForSale.csv", true);
+        PrintWriter pw = new PrintWriter(fos);
+        String temp = (plateNumber + "," + year + "," + brand + "," + model + "," + sellingPrice);
+        pw.println(temp);
+        pw.close();
+        return newVehicle;
+    }
+
+    public static void addVehicle(vehicle vehicle){
+        vehicleObject.add(vehicle);
+    }
+
+    public static void removeVehicle(String plateNumber){
+        for (vehicle vehicle: vehicleObject) {
+            if (vehicle.getPlateNumber().equals(plateNumber)) {
+                vehicleObject.remove(vehicle);
+            }
+        }
+    }
+
+    public static void searchVehicle(String plateNumber){
+        for(vehicle vehicle: vehicleObject){
+            if(vehicle.getPlateNumber().equals(plateNumber)){
+                System.out.println("Plate number: "+vehicle.getPlateNumber());
+                System.out.println("Vehicle year: "+vehicle.getYear());
+                System.out.println("Vehicle brand: "+vehicle.getBrand());
+                System.out.println("Vehicle model: "+vehicle.getModel());
+                System.out.println("Vehicle selling price: "+vehicle.getSellingPrice());
+            }
+        }
+    }
+
+   public static void printArrayList(){
+        for (vehicle vehicle: vehicleObject){
+            System.out.println("Plate number: "+vehicle.getPlateNumber());
+            System.out.println("Vehicle year: "+vehicle.getYear());
+            System.out.println("Vehicle brand: "+vehicle.getBrand());
+            System.out.println("Vehicle model: "+vehicle.getModel());
+            System.out.println("Vehicle selling price: "+vehicle.getSellingPrice());
+        }
+   }
+}
