@@ -1,0 +1,226 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class admin {
+    public static void showOptions(){
+        System.out.println("1 --> Enter details of a new vehicle");
+        System.out.println("2 --> Enter details of a new customer");
+        System.out.println("3 --> Print list of vehicles");
+        System.out.println("4 --> Remove vehicle by number plate");
+        System.out.println("5 --> Search vehicle by name");
+        System.out.println("6 --> Enter details of a sold car");
+        System.out.println("7 --> Schedule a requested appointment");
+        System.out.println("8 --> Exit");
+    }
+
+    public static void goBackAdmin() throws FileNotFoundException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nChoose from the below options");
+        System.out.println("1 --> Remain as admin");
+        System.out.println("2 --> Go to main menu");
+        System.out.println("3 --> Exit");
+        int exit = sc.nextInt();
+        if (exit == 1){
+            enterToA();
+        }
+        else if (exit == 2){
+            Main.mainMenu();
+        }
+        else {
+            System.out.println("\nExiting the program, have a good day!");
+        }
+    }
+
+    public static void soldCar() throws FileNotFoundException{
+
+        FileOutputStream fos = new FileOutputStream("carsSold.csv", true);
+        PrintWriter pw = new PrintWriter(fos);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter date of sale(DD/MM/YYYY): ");
+        String day = sc.next();
+        System.out.println("Enter number on plate: ");
+        String plateNumber = sc.next();
+        System.out.println("Enter model: ");
+        String model = sc.next();
+        System.out.println("Enter brand: ");
+        String brand = sc.next();
+        System.out.println("Enter year: ");
+        int year = sc.nextInt();
+        System.out.println("Enter spent price: ");
+        int spentPrice = sc.nextInt();
+        System.out.println("Enter price the car was sold for: ");
+        int price = sc.nextInt();
+        pw.println(plateNumber+","+year+","+brand+","+model+","+spentPrice+","+price+","+day);
+        pw.close();
+
+        FileOutputStream line = new FileOutputStream("customers.csv", true);
+        PrintWriter p = new PrintWriter(line);
+        System.out.println("Enter owner's ID: ");
+        String ID = sc.next();
+        System.out.println("Enter owner's name: ");
+        String name = sc.next();
+        System.out.println("Enter owner's date of birth(DD/MM/YYYY): ");
+        String dob = sc.next();
+        p.println(ID+","+name+","+dob);
+        p.close();
+
+        FileOutputStream profitLine = new FileOutputStream("profit.csv", true);
+        PrintWriter profit = new PrintWriter(profitLine);
+        int earned = price - spentPrice;
+        profit.println(day+","+earned);
+        profit.close();
+    }
+
+    public static void viewCarsForSale() {
+        String path = "carsForSale.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readSaleCars(){
+        boolean found = false;
+        int index = 0;
+        String plateNumber = "";
+        String year = "";
+        String brand = "";
+        String model = "";
+        String sellingPrice = "";
+        String spentPrice = "";
+
+        try{
+            for(int i=0; i<10; i++){
+                Scanner x = new Scanner(new File("carsForSale.csv"));
+                x.useDelimiter("[,\n]");
+                while(x.hasNext() && !found){
+                    index = Integer.parseInt(x.next());
+                    plateNumber = x.next();
+                    year = x.next();
+                    brand = x.next();
+                    model = x.next();
+                    sellingPrice = x.next();
+                    spentPrice = x.next();
+
+                    if(index==i){
+                        found = true;
+                    }
+                }
+                if (found){
+                    System.out.println("Index: " + index +" Number plate: " + plateNumber + " Year: " + year + " Brand: " + brand + " Model: " + model + " Selling Price: " + sellingPrice + " Price Spent: " + spentPrice);
+                }
+                else{
+                    System.out.println("Record not found");
+                }
+            }
+        }
+        catch(Exception e){
+            System.out.println("Error");
+        }
+    }
+
+    public static void newCustomer() throws FileNotFoundException{
+
+        FileOutputStream fos = new FileOutputStream("customers.csv", true);
+        PrintWriter pw = new PrintWriter(fos);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter date of birth(DD/MM/YYYY): ");
+        String birthday = sc.nextLine();
+        System.out.println("Enter customer ID: ");
+        int ID = sc.nextInt();
+        System.out.println("Enter first name: ");
+        String name = sc.next();
+        pw.println(ID+","+name+","+birthday);
+        pw.close();
+    }
+
+    public static void newAppointment() throws FileNotFoundException{
+
+        FileOutputStream fos = new FileOutputStream("scheduledAppointments.csv", true);
+        PrintWriter pw = new PrintWriter(fos);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter vehicle ID: ");
+        String vID = sc.nextLine();
+        System.out.println("Enter requirement: ");
+        String requirement = sc.nextLine();
+        System.out.println("Enter date of appointment(DD/MM/YYYY): ");
+        String date = sc.nextLine();
+        System.out.println("Enter time of appointment(HH:MM): ");
+        String time = sc.nextLine();
+
+        pw.println(vID+","+requirement+","+date+","+time);
+        pw.close();
+    }
+
+    public static void enterToA() throws FileNotFoundException {
+        admin adminObject = new admin();
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        Scanner a = new Scanner(System.in);
+        System.out.println("Enter Username:");
+        String userName = a.nextLine();
+        System.out.println("Enter Password:");
+        int passWord = a.nextInt();
+        int exit;
+        if ((userName.equals("admin123")) && (passWord == 1234)) {
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            admin.showOptions();
+            System.out.println("Enter index of task to be done:");
+            int jobRole = a.nextInt();
+            if (jobRole == 1){
+                vehicle vehicle1 = vehicle.getVehicle();
+                vehicle.addVehicle(vehicle1);
+            }
+            else if (jobRole == 2){
+                admin.newCustomer();
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 3){
+                admin.viewCarsForSale();
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 4){
+                System.out.println("Enter vehicle plate to delete");
+                String numPlate = a.nextLine();
+                vehicle.removeVehicle(numPlate);
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 5){
+                System.out.println("Enter vehicle number plate to search");
+                String numPlate = a.nextLine();
+                vehicle.searchVehicle(numPlate);
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 6){
+                admin.soldCar();
+                System.out.println("Enter vehicle plate to delete from vehicles for sale");
+                String numPlate = a.nextLine();
+                vehicle.removeVehicle(numPlate);
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 7){
+                admin.newAppointment();
+                admin.goBackAdmin();
+            }
+            else if (jobRole == 8){
+                Main.goBackToMainMenu();
+            }
+            else {
+                System.out.println("Invalid Entry");
+                Main.goBackToMainMenu();
+            }
+        }
+        else {
+            Main.goBackToMainMenu();
+        }
+    }
+}
