@@ -11,6 +11,9 @@ public class vehicle {
     private static String brand;
     private static String model;
     private static int sellingPrice;
+    private static int spentPrice;
+
+    private static String dateSold;
 
     vehicle(){
 
@@ -22,6 +25,16 @@ public class vehicle {
         vehicle.brand = brand;
         vehicle.model = model;
         vehicle.sellingPrice = sellingPrice;
+    }
+
+    vehicle(String plateNumber, String year, String brand, String model, int sellingPrice, int spentPrice, String dateSold){
+        vehicle.plateNumber = plateNumber;
+        vehicle.year = year;
+        vehicle.brand = brand;
+        vehicle.model = model;
+        vehicle.sellingPrice = sellingPrice;
+        vehicle.spentPrice = spentPrice;
+        vehicle.dateSold = dateSold;
     }
 
     public static List<vehicle> vehicleObject = new ArrayList<>();
@@ -65,6 +78,22 @@ public class vehicle {
         vehicle.sellingPrice = sellingPrice;
     }
 
+    public static int getSpentPrice() {
+        return spentPrice;
+    }
+
+    public static void setSpentPrice(int spentPrice) {
+        vehicle.spentPrice = spentPrice;
+    }
+
+    public static String getDateSold() {
+        return dateSold;
+    }
+
+    public static void setDateSold(String dateSold) {
+        vehicle.dateSold = dateSold;
+    }
+
     public void viewVehicles(){
         System.out.println("Plate number: "+getPlateNumber());
         System.out.println("Vehicle year: "+getYear());
@@ -99,33 +128,4 @@ public class vehicle {
         vehicleObject.add(vehicle);
     }
 
-    public static void removeVehicle(String plateNumber){
-        for (vehicle vehicle: vehicleObject) {
-            if (vehicle.getPlateNumber().equals(plateNumber)) {
-                vehicleObject.remove(vehicle);
-            }
-        }
-    }
-
-    public static void searchVehicle(String plateNumber){
-        for(vehicle vehicle: vehicleObject){
-            if(vehicle.getPlateNumber().equals(plateNumber)){
-                System.out.println("Plate number: "+vehicle.getPlateNumber());
-                System.out.println("Vehicle year: "+vehicle.getYear());
-                System.out.println("Vehicle brand: "+vehicle.getBrand());
-                System.out.println("Vehicle model: "+vehicle.getModel());
-                System.out.println("Vehicle selling price: "+vehicle.getSellingPrice());
-            }
-        }
-    }
-
-   public static void printArrayList(){
-        for (vehicle vehicle: vehicleObject){
-            System.out.println("Plate number: "+vehicle.getPlateNumber());
-            System.out.println("Vehicle year: "+vehicle.getYear());
-            System.out.println("Vehicle brand: "+vehicle.getBrand());
-            System.out.println("Vehicle model: "+vehicle.getModel());
-            System.out.println("Vehicle selling price: "+vehicle.getSellingPrice());
-        }
-   }
 }
