@@ -1,19 +1,20 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class admin {
     public static void showOptions(){
         System.out.println("1 --> Enter details of a new vehicle");
         System.out.println("2 --> Enter details of a new customer");
-        System.out.println("3 --> Print list of vehicles");
-        System.out.println("4 --> Remove vehicle by number plate");
-        System.out.println("5 --> Search vehicle by name");
+        System.out.println("3 --> Edit customers");
+        System.out.println("4 --> Edit vehicles for sale");
+        System.out.println("5 --> Edit sold vehicles");
         System.out.println("6 --> Enter details of a sold car");
-        System.out.println("7 --> Schedule a requested appointment");
+        System.out.println("7 --> Check and schedule a requested appointment");
         System.out.println("8 --> Exit");
     }
 
-    public static void goBackAdmin() throws FileNotFoundException {
+    public static void goBackAdmin() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nChoose from the below options");
         System.out.println("1 --> Remain as admin");
@@ -71,8 +72,158 @@ public class admin {
         profit.close();
     }
 
+    public static void editCarsSold() throws IOException {
+        try {
+            String path = "C:\\Users\\Dell\\IdeaProjects\\codes\\carsSold.csv";
+            File line = new File(path);
+            vehicle v = new vehicle();
+
+            ArrayList<String> soldVehicleList = new ArrayList<>();
+
+            File soldCarFile = new File(path);
+            Scanner reader = new Scanner(soldCarFile);
+            int count = 1;
+            FileOutputStream fos = new FileOutputStream("editedSoldCars.csv", true);
+            PrintWriter pw = new PrintWriter(fos);
+            while ((reader.hasNextLine())) {
+
+                String data = reader.nextLine();
+
+                String[] values = data.split(","); //splits and prints customer ids and other details in order
+                v.setPlateNumber(values[0]);
+                v.setYear(values[1]);
+                v.setBrand(values[2]);
+                v.setModel(values[3]);
+                v.setSpentPrice(Integer.parseInt(values[4]));
+                v.setSellingPrice(Integer.parseInt(values[5]));
+                v.setDateSold(values[6]);
+
+                System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                String newPlate = "";
+                String newYear = "";
+                String newBrand = "";
+                String newModel = "";
+                int newSpentPrice = 0;
+                int newSoldPrice = 0;
+                String newDateSold = "";
+
+                System.out.println("Do you want to change any details of the above vehicle?(1 = yes or 2 = no)");
+                Scanner sc2 = new Scanner(System.in);
+                String removeData = "";
+                int change = sc2.nextInt();
+                if (change == 1){
+                    System.out.println("Which item do you want to change?(1/2/3/4/5/6/7)");
+                    System.out.println("1 --> Number Plate");
+                    System.out.println("2 --> Year");
+                    System.out.println("3 --> Brand");
+                    System.out.println("4 --> Model");
+                    System.out.println("5 --> Spent Price");
+                    System.out.println("6 --> Selling Price");
+                    System.out.println("7 --> Date Sold");
+
+                    int item = sc2.nextInt();
+
+                    if (item == 1){
+                        removeData = v.getPlateNumber();
+                        System.out.println(removeData);
+                        System.out.println("Enter new plate number");
+                        newPlate = sc2.next();
+                        v.setPlateNumber(newPlate);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                    }
+                    else if (item == 2){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new year");
+                        newYear = sc2.next();
+                        v.setYear(newYear);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                    }
+                    else if (item == 3){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new brand");
+                        newBrand = sc2.next();
+                        v.setBrand(newBrand);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                    }
+                    else if (item == 4){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new model");
+                        newModel = sc2.next();
+                        v.setModel(newModel);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                    }
+                    else if (item == 5) {
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new spent price");
+                        newSpentPrice = sc2.nextInt();
+                        v.setSpentPrice(newSpentPrice);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+                    }
+                    else if (item == 6){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new selling price");
+                        newSoldPrice = sc2.nextInt();
+                        v.setSellingPrice(newSoldPrice);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+                    }
+                    else if (item == 7) {
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new date sold");
+                        newDateSold = sc2.next();
+                        v.setDateSold(newDateSold);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+                    }
+                    else{
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Spent Price: "+v.getSpentPrice() + " | Sold Price: "+v.getSellingPrice()+" | Date Sold : "+v.getDateSold());
+
+                        System.out.println("Invalid input!");
+                    }
+                    String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSpentPrice() + "," + v.getSellingPrice() + ","+ v.getDateSold());
+
+                    soldVehicleList.add(c3);
+                }
+                count++;
+            }
+            pw.close();
+            reader.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void viewCarsForSale() {
         String path = "carsForSale.csv";
+        System.out.println("numberPlate,year,brand,model,sellingPrice");
         String line = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
@@ -84,6 +235,128 @@ public class admin {
             e.printStackTrace();
         }
         catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void editCarsForSale() throws IOException {
+        try {
+            String path = "C:\\Users\\Dell\\IdeaProjects\\codes\\carsForSale.csv";
+            File line = new File(path);
+            vehicle v = new vehicle();
+
+            ArrayList<String> vehicleList = new ArrayList<>();
+
+            File customerFile = new File(path);
+            Scanner reader = new Scanner(customerFile);
+            int count = 1;
+            FileOutputStream fos = new FileOutputStream("editedCarsForSale.csv", true);
+            PrintWriter pw = new PrintWriter(fos);
+            while ((reader.hasNextLine())) {
+
+                String data = reader.nextLine();
+
+                String[] values = data.split(","); //splits and prints customer ids and other details in order
+                v.setPlateNumber(values[0]);
+                v.setYear(values[1]);
+                v.setBrand(values[2]);
+                v.setModel(values[3]);
+                v.setSellingPrice(Integer.parseInt(values[4]));
+
+                System.out.println("\nIndex: " + count + " | Plate Number: "+ v.getPlateNumber()+" | Year: "+ v.getYear()+" | Brand: "+ v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                String newPlate = "";
+                String newYear = "";
+                String newBrand = "";
+                String newModel = "";
+                int newPrice = 0;
+
+                System.out.println("Do you want to change any details of the above vehicle?(1 = yes or 2 = no)");
+                Scanner sc2 = new Scanner(System.in);
+                String removeData = "";
+                int change = sc2.nextInt();
+                if (change == 1){
+                    System.out.println("Which item do you want to change?(1/2/3/4/5)");
+                    System.out.println("1 --> Number Plate");
+                    System.out.println("2 --> Year");
+                    System.out.println("3 --> Brand");
+                    System.out.println("4 --> Model");
+                    System.out.println("5 --> Selling Price");
+                    int item = sc2.nextInt();
+
+                    if (item == 1){
+                        removeData = v.getPlateNumber();
+                        System.out.println(removeData);
+                        System.out.println("Enter new plate number");
+                        newPlate = sc2.next();
+                        v.setPlateNumber(newPlate);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+v.getPlateNumber()+" | Year: "+v.getYear()+" | Brand: "+v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                    }
+                    else if (item == 2){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new year");
+                        newYear = sc2.next();
+                        v.setYear(newYear);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+v.getPlateNumber()+" | Year: "+v.getYear()+" | Brand: "+v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                    }
+                    else if (item == 3){
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new brand");
+                        newBrand = sc2.next();
+                        v.setBrand(newBrand);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+v.getPlateNumber()+" | Year: "+v.getYear()+" | Brand: "+v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                    }
+                    else if (item == 4){
+                    removeData = v.getPlateNumber();
+                        System.out.println("Enter new name");
+                        newModel = sc2.next();
+                        v.setModel(newModel);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+v.getPlateNumber()+" | Year: "+v.getYear()+" | Brand: "+v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                    }
+                    else if (item == 5) {
+                        removeData = v.getPlateNumber();
+                        System.out.println("Enter new date of birth");
+                        newPrice = sc2.nextInt();
+                        v.setSellingPrice(newPrice);
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: " + v.getPlateNumber() + " | Year: " + v.getYear() + " | Brand: " + v.getBrand() + " | Model: " + v.getModel() + " | Selling Price: " + v.getSellingPrice());
+                    }
+                    else{
+                        String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | Plate Number: "+v.getPlateNumber()+" | Year: "+v.getYear()+" | Brand: "+v.getBrand()+" | Model: "+v.getModel()+" | Selling Price: "+v.getSellingPrice());
+
+                        System.out.println("Invalid input!");
+                    }
+                    String c3 = (v.getPlateNumber() + "," + v.getYear() + "," + v.getBrand() + "," + v.getModel() + "," + v.getSellingPrice());
+
+                    vehicleList.add(c3);
+                }
+                count++;
+            }
+            pw.close();
+            reader.close();
+        }
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -116,7 +389,7 @@ public class admin {
                     }
                 }
                 if (found){
-                    System.out.println("Index: " + index +" Number plate: " + plateNumber + " Year: " + year + " Brand: " + brand + " Model: " + model + " Selling Price: " + sellingPrice + " Price Spent: " + spentPrice);
+                    System.out.println("\nIndex: " + index +" Number plate: " + plateNumber + " Year: " + year + " Brand: " + brand + " Model: " + model + " Selling Price: " + sellingPrice + " Price Spent: " + spentPrice);
                 }
                 else{
                     System.out.println("Record not found");
@@ -143,7 +416,113 @@ public class admin {
         pw.close();
     }
 
+    public static void editCustomers() throws IOException {
+        try {
+            String path = "C:\\Users\\Dell\\IdeaProjects\\codes\\customers.csv";
+            File line = new File(path);
+            customer c = new customer();
+
+            ArrayList<String> customerList = new ArrayList<>();
+
+            File customerFile = new File(path);
+            Scanner reader = new Scanner(customerFile);
+            int count = 1;
+            FileOutputStream fos = new FileOutputStream("editedCustomers.csv", true);
+            PrintWriter pw = new PrintWriter(fos);
+            while ((reader.hasNextLine())) {
+
+                String data = reader.nextLine();
+
+                String[] values = data.split(","); //splits and prints customer ids and other details in order
+                c.setID(Integer.parseInt(values[0]));
+                c.setName(values[1]);
+                c.setBirthday(values[2]);
+                System.out.println("\nIndex: " + count + " | ID: "+c.getID()+" | Name: "+c.getName()+" | Date of Birth: "+c.getBirthday());
+
+                int newID = 0;
+                String newName = "";
+                String newDob = "";
+
+                System.out.println("Do you want to change any details of the above customer?(1 = yes or 2 = no)");
+                Scanner sc2 = new Scanner(System.in);
+                int removeData = 0;
+                int change = sc2.nextInt();
+                if (change == 1){
+                    System.out.println("Which item do you want to change?(1/2/3)");
+                    System.out.println("1 --> ID");
+                    System.out.println("2 --> Name");
+                    System.out.println("3 --> Date of Birth");
+                    int item = sc2.nextInt();
+
+                    if (item == 1){
+                        removeData = c.getID();
+                        System.out.println(removeData);
+                        System.out.println("Enter new ID");
+                        newID = sc2.nextInt();
+                        c.setID(newID);
+                        String c3 = (c.getID() + "," + c.getName() + "," + c.getBirthday());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | ID: "+c.getID()+" | Name: "+c.getName()+" | Date of Birth: "+c.getBirthday());
+                    }
+                    else if (item == 2){
+                        removeData = c.getID();
+                        System.out.println("Enter new name");
+                        newName = sc2.next();
+                        c.setName(newName);
+                        String c3 = (c.getID() + "," + c.getName() + "," + c.getBirthday());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | ID: "+c.getID()+" | Name: "+c.getName()+" | Date of Birth: "+c.getBirthday());
+                    }
+                    else if (item == 3){
+                        removeData = c.getID();
+                        System.out.println("Enter new date of birth");
+                        newDob = sc2.next();
+                        c.setBirthday(newDob);
+                        String c3 = (c.getID() + "," + c.getName() + "," + c.getBirthday());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | ID: "+c.getID()+" | Name: "+c.getName()+" | Date of Birth: "+c.getBirthday());
+                    }
+                    else{
+                        String c3 = (c.getID() + "," + c.getName() + "," + c.getBirthday());
+                        System.out.println(c3);
+                        pw.println(c3);
+                        System.out.println("\nIndex: " + count + " | ID: "+c.getID()+" | Name: "+c.getName()+" | Date of Birth: "+c.getBirthday());
+                        System.out.println("Invalid input!");
+                    }
+                    String c3 = (c.getID() + "," + c.getName() + "," + c.getBirthday());
+
+                    customerList.add(c3);
+                }
+                count++;
+            }
+            pw.close();
+            reader.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void newAppointment() throws FileNotFoundException{
+        String path = "askForAppointment.csv";
+        String line = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            System.out.println("\nALl appointment requests made by customers: ");
+            System.out.println("plateNumber,serviceRequired");
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
         FileOutputStream fos = new FileOutputStream("scheduledAppointments.csv", true);
         PrintWriter pw = new PrintWriter(fos);
@@ -162,7 +541,8 @@ public class admin {
         pw.close();
     }
 
-    public static void enterToA() throws FileNotFoundException {
+
+    public static void enterToA() throws IOException {
         admin adminObject = new admin();
         System.out.println("----------------------------------------------------------------------------------------------------");
         Scanner a = new Scanner(System.in);
@@ -185,26 +565,19 @@ public class admin {
                 admin.goBackAdmin();
             }
             else if (jobRole == 3){
-                admin.viewCarsForSale();
+                admin.editCustomers();
                 admin.goBackAdmin();
             }
             else if (jobRole == 4){
-                System.out.println("Enter vehicle plate to delete");
-                String numPlate = a.nextLine();
-                vehicle.removeVehicle(numPlate);
+                admin.editCarsForSale();
                 admin.goBackAdmin();
             }
             else if (jobRole == 5){
-                System.out.println("Enter vehicle number plate to search");
-                String numPlate = a.nextLine();
-                vehicle.searchVehicle(numPlate);
+                admin.editCarsSold();
                 admin.goBackAdmin();
             }
             else if (jobRole == 6){
                 admin.soldCar();
-                System.out.println("Enter vehicle plate to delete from vehicles for sale");
-                String numPlate = a.nextLine();
-                vehicle.removeVehicle(numPlate);
                 admin.goBackAdmin();
             }
             else if (jobRole == 7){
