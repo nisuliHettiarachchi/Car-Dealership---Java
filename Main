@@ -1,14 +1,8 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
-//to do
-//implement deletion of record in admin from array list
-//how to store objects in an array list from a csv file
-//how to edit objects and restore in files
-//check if all string inputs take next() and not nextLine()
-
 public class Main {
-    public static void mainMenu() throws FileNotFoundException {
+    public static void mainMenu() throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.println("Please select your role from the below list:\n1 --> Admin \n2 --> Customer \n3 --> Owner \n4 --> Technician");
         System.out.println("Enter role number:");
@@ -31,13 +25,13 @@ public class Main {
         }
     }
 
-    public static void goBackToMainMenu() throws FileNotFoundException {
+    public static void goBackToMainMenu() throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.println("\nGoing back to main menu");
         mainMenu();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.println("Welcome to DealVehicles.lk!");
         mainMenu();
