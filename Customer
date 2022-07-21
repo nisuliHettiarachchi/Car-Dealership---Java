@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class customer {
@@ -6,6 +8,18 @@ public class customer {
     int ID;
     String name;
     String birthday;
+
+    public customer() {
+
+    }
+
+    customer(int cID, String cName, String dob){
+        this.ID = cID;
+        this.name = cName;
+        this.birthday = dob;
+    }
+
+    public static List<customer> customerObject = new ArrayList<>();
 
     public int getID() {
         return ID;
@@ -31,13 +45,6 @@ public class customer {
         this.birthday = birthday;
     }
 
-
-    customer(int cID, String cName, String dob){
-        this.ID = cID;
-        this.name = cName;
-        this.birthday = dob;
-    }
-
     public static void showOptions(){
         System.out.println("1 --> View vehicles");
         System.out.println("2 --> Make an appointment");
@@ -45,7 +52,35 @@ public class customer {
         System.out.println("4 --> Exit");
     }
 
-    public static void goBackCustomer() throws FileNotFoundException {
+    public void viewCustomers(){
+        System.out.println("ID: "+getID());
+        System.out.println("Customer name: "+getName());
+        System.out.println("Customer birthday: "+getBirthday());
+    }
+
+    public static void addCustomer(customer customer){
+        customerObject.add(customer);
+    }
+
+    public static void removeCustomer(int ID){
+        for (customer customer: customerObject) {
+            if (customer.getID() == ID) {
+                customerObject.remove(customer);
+            }
+        }
+    }
+
+    public static void searchCustomer(int ID){
+        for(customer customer: customerObject){
+            if(customer.getID() == ID){
+                System.out.println("ID: "+customer.getID());
+                System.out.println("Customer name: "+customer.getName());
+                System.out.println("Customer birthday: "+customer.getBirthday());
+            }
+        }
+    }
+
+    public static void goBackCustomer() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nChoose from the below options");
         System.out.println("1 --> Remain as customer");
@@ -81,6 +116,7 @@ public class customer {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all vehicles in system:");
+            System.out.println("plateNumber,service,date,time");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
@@ -93,7 +129,7 @@ public class customer {
         }
     }
 
-    public static void enterToC() throws FileNotFoundException {
+    public static void enterToC() throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         Scanner b = new Scanner(System.in);
         System.out.println("Enter Username:");
