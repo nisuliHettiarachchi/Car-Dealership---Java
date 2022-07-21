@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class owner {
@@ -16,7 +13,7 @@ public class owner {
         System.out.println("7 --> Exit");
     }
 
-    public static void goBackOwner() throws FileNotFoundException {
+    public static void goBackOwner() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nChoose from the below options");
         System.out.println("1 --> Remain as owner");
@@ -40,8 +37,25 @@ public class owner {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all vehicles in system:");
+            System.out.println("plateNumber,year,brand,model,sellingPrice");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path2 = "editedCarsForSale.csv";
+        String line2 = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path2));
+            System.out.println("\nDetails of all edited vehicles in system:");
+            System.out.println("plateNumber,year,brand,model,sellingPrice");
+            while ((line2 = br.readLine()) != null) {
+                System.out.println(line2);
             }
         }
         catch (FileNotFoundException e) {
@@ -58,10 +72,25 @@ public class owner {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all customers in system:");
+            System.out.println("customerID,name,dateOfBirth");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
-                //String[] values = line.split(","); //splits and prints customer ids and other details in order
-                //System.out.println(values[index]);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path2 = "editedCustomers.csv";
+        String line2 = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path2));
+            System.out.println("\nDetails of all customers whose records were edited and are in the system:");
+            System.out.println("customerID,name,dateOfBirth");
+            while ((line2 = br.readLine()) != null) {
+                System.out.println(line2);
             }
         }
         catch (FileNotFoundException e) {
@@ -78,6 +107,7 @@ public class owner {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all maintenance records in system:");
+            System.out.println("carID,technician,cost");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
@@ -96,8 +126,25 @@ public class owner {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all sold cars in system:");
+            System.out.println("plateNumber,year,brand,model,spentPrice,soldPrice,dateSold");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String path2 = "editedSoldCars.csv";
+        String line2 = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path2));
+            System.out.println("\nDetails of all edited sold cars in system:");
+            System.out.println("plateNumber,year,brand,model,spentPrice,soldPrice,dateSold");
+            while ((line2 = br.readLine()) != null) {
+                System.out.println(line2);
             }
         }
         catch (FileNotFoundException e) {
@@ -114,6 +161,7 @@ public class owner {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             System.out.println("\nDetails of all maintenance records in system:");
+            System.out.println("dateSold,profit");
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
@@ -126,7 +174,42 @@ public class owner {
         }
     }
 
-    public static void enterToO() throws FileNotFoundException {
+    public static void profitReport() throws IOException {
+        try {
+            String path = "C:\\Users\\Dell\\IdeaProjects\\codes\\profit.csv";
+            File line = new File(path);
+            System.out.println("Graph showing profits made in the company:");
+            File profitFile = new File(path);
+            Scanner reader = new Scanner(profitFile);
+            int counter = 0;
+            System.out.println("\n     Y-axis/Date");
+            System.out.println("          ^");
+            System.out.println("          |");
+            while ((reader.hasNextLine())) {
+
+                String data = reader.nextLine();
+
+                String[] values = data.split(","); //splits and prints customer ids and other details in order
+                String date = values[0];
+                int profit = Integer.parseInt(values[1]);
+                profit = profit / 100;
+                System.out.print(date + "|");
+                for(int i =0; i<profit; i++){
+                    System.out.print("*");
+                }
+                System.out.println();
+                counter++;
+            }
+            System.out.println("          0-----------------------------------------------------------> X-axis/Profit (1 * = $100)");
+            reader.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void enterToO() throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         Scanner c = new Scanner(System.in);
         System.out.println("Enter Username:");
@@ -138,40 +221,30 @@ public class owner {
             owner.showOptions();
             System.out.println("Enter index of task to be done:");
             int task = c.nextInt();
-            if (task == 1){
+            if (task == 1) {
                 owner.viewCarsForSale();
                 owner.goBackOwner();
-            }
-            else if (task == 2){
+            } else if (task == 2) {
                 owner.viewCustomers();
                 owner.goBackOwner();
-            }
-            else if (task == 3){
+            } else if (task == 3) {
                 owner.viewMaintenance();
                 owner.goBackOwner();
-            }
-            else if (task == 4){
+            } else if (task == 4) {
                 owner.viewSoldCars();
                 owner.goBackOwner();
-            }
-            else if (task == 5){
+            } else if (task == 5) {
                 owner.viewProfit();
                 owner.goBackOwner();
-            }
-            else if (task == 6){
-                //report
-                System.out.println();
+            } else if (task == 6) {
+                owner.profitReport();
                 owner.goBackOwner();
-            }
-            else if (task == 7){
+            } else if (task == 7) {
                 Main.goBackToMainMenu();
-
-            }
-            else{
+            } else {
                 Main.goBackToMainMenu();
             }
-        }
-        else {
+        } else {
             Main.goBackToMainMenu();
         }
     }
