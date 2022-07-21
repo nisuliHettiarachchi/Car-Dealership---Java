@@ -8,7 +8,7 @@ public class technician {
         System.out.println("2 --> Exit");
     }
 
-    public static void goBackTechnician() throws FileNotFoundException {
+    public static void goBackTechnician() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nChoose from the below options");
         System.out.println("1 --> Remain as technician");
@@ -43,7 +43,7 @@ public class technician {
         pw.close();
     }
 
-    public static void enterToT() throws FileNotFoundException {
+    public static void enterToT() throws IOException {
         System.out.println("----------------------------------------------------------------------------------------------------");
         Scanner d = new Scanner(System.in);
         System.out.println("Enter Username:");
