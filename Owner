@@ -182,6 +182,7 @@ public class owner {
             File profitFile = new File(path);
             Scanner reader = new Scanner(profitFile);
             int counter = 0;
+            int totalProfit = 0;
             System.out.println("\n     Y-axis/Date");
             System.out.println("          ^");
             System.out.println("          |");
@@ -192,6 +193,7 @@ public class owner {
                 String[] values = data.split(","); //splits and prints customer ids and other details in order
                 String date = values[0];
                 int profit = Integer.parseInt(values[1]);
+                totalProfit = totalProfit + profit;
                 profit = profit / 100;
                 System.out.print(date + "|");
                 for(int i =0; i<profit; i++){
@@ -202,6 +204,7 @@ public class owner {
             }
             System.out.println("          0-----------------------------------------------------------> X-axis/Profit (1 * = $100)");
             reader.close();
+            System.out.println("Total profit earned for the period is: " + totalProfit);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
